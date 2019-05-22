@@ -4,8 +4,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-
-        System.out.println("what's your USD balance ?");                            // balance -- starting balance
+        // balance -- starting balance
+        System.out.println("what's your USD balance ?");
         Scanner usdbalance = new Scanner(System.in);
         double startingBalance = usdbalance.nextDouble();
 
@@ -15,8 +15,8 @@ public class Main {
             System.out.println("your balance is : " + startingBalance + ". Have fun gambling :)");
         }
 
-
-        System.out.println("add a stock name");                                     // stock name
+        // stock name
+        System.out.println("add a stock name");
         Scanner stockname = new Scanner(System.in);
         String stockName = stockname.nextLine();
         System.out.println("you've bought " + stockName + " stock. Worst decision ever.");
@@ -24,7 +24,8 @@ public class Main {
         // catch everything else other than String and try again
 
 
-        System.out.println("how much is one share worth these days ? ");            // stock price
+        // stock price
+        System.out.println("how much is one share worth these days ? ");
         Scanner stockprice = new Scanner(System.in);
         double stockPrice = stockprice.nextDouble();
 
@@ -35,8 +36,8 @@ public class Main {
         }
         //
 
-
-        System.out.println("how many shares did you bought ? ");                     // stock amount
+        // stock amount
+        System.out.println("how many shares did you bought ? ");
         Scanner stockamount = new Scanner(System.in);
         double stockAmount = stockamount.nextDouble();
 
@@ -46,12 +47,15 @@ public class Main {
             System.out.println("you've bought " + stockAmount + " " + stockName + " shares. You must hate money...");
         }
 
+        // calculate the purchased stock (amount and price)
+        double stockWorth = stockPrice * stockAmount;
 
-        double stockWorth = stockPrice * stockAmount;                                // calculate the purchased stock (amount and price)
-        double balanceLeft = startingBalance - stockWorth;                           // balance left
+        // balance left
+        double balanceLeft = startingBalance - stockWorth;
 
         if (stockWorth > startingBalance) {
-            System.out.println("error, stockWorth is bigger than startingBalance"); // future catch
+            System.out.println("error, stockWorth is bigger than startingBalance");
+            // some form of future catch
         }
 
         if ( balanceLeft < 0) {
