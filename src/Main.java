@@ -5,66 +5,92 @@ public class Main {
     public static void main(String[] args) {
 
         // balance -- starting balance
-        System.out.println("what's your USD balance ?");
-        Scanner usdbalance = new Scanner(System.in);
-        double startingBalance = usdbalance.nextDouble();
+        double balance;
 
-        if (startingBalance < 0) {
-            System.out.println("I though you might try this, stop wasting your time.");
-        } else {
-            System.out.println("your balance is : " + startingBalance + ". Have fun gambling :)");
+        try {
+            String question = "Enter your balance: ";
+            balance = scanInput(question).nextDouble();
+        } catch (Exception e) {
+            System.out.println("Invalid input for balance, please provide a valid one next time when you will run this software.");
+            return;
         }
+
+        // Do you have money?
+        if (! (balance > 0)) {
+            // You do not have money
+            System.out.println("I though you might try this, stop wasting your time.");
+            return;
+        }
+
+        // You have money
+        System.out.println("your balance is : " + balance + ". Have fun gambling :)");
 
         // stock name
         System.out.println("add a stock name");
-        Scanner stockname = new Scanner(System.in);
-        String stockName = stockname.nextLine();
+        Scanner scannedStockName = new Scanner(System.in);
+
+        String stockName = "";
+        try {
+            stockName = scannedStockName.nextLine();
+        } catch (Exception e) {
+            System.out.println("You've entered an invalid stock name. Try again.");
+        }
+
         System.out.println("you've bought " + stockName + " stock. Worst decision ever.");
-        // needs method: if name already exists, try again
-        // catch everything else other than String and try again
 
 
         // stock price
         System.out.println("how much is one share worth these days ? ");
-        Scanner stockprice = new Scanner(System.in);
-        double stockPrice = stockprice.nextDouble();
+        Scanner scannedStockPrice = new Scanner(System.in);
 
-        if (stockPrice > startingBalance) {
+        double stockPrice = 0;
+        try {
+            stockPrice = scannedStockPrice.nextDouble();
+        } catch (Exception e) {
+            System.out.println("Invalid stock price, enter a valid price next time.");
+            return;
+        }
+
+        if (! (stockPrice > 0)) {
+            System.out.println("stock price has to be above 0. ");
+            return;
+        }
+
+        // quantity (have to be double)
+        System.out.println("Please enter the quantity: ");
+        Scanner scannedQuantity = new Scanner(System.in);
+
+        double quantity = 0;
+        try {
+            quantity = scannedStockPrice.nextDouble();
+        } catch (Exception e) {
+            System.out.println("Invalid quantity, enter a valid quantity next time.");
+        }
+
+        if (! (quantity > 0)) {
+            System.out.println("quantity has to be above 0. ");
+            return;
+        }
+
+        double totalExpense = stockPrice * quantity;
+
+        // check if there is enough money
+        if (balance < totalExpense) {
             System.out.println("insufficient balance, try something you CAN afford. ");
-        } else {
-            System.out.println("you've bought " + stockName + " for " + stockPrice + " usd? wow... total rip off.");
-        }
-        //
-
-        // stock amount
-        System.out.println("how many shares did you bought ? ");
-        Scanner stockamount = new Scanner(System.in);
-        double stockAmount = stockamount.nextDouble();
-
-        if ((stockAmount * stockPrice) > startingBalance) {
-            System.out.println("insufficient balance, buy less shares. ");
-        } else {
-            System.out.println("you've bought " + stockAmount + " " + stockName + " shares. You must hate money...");
+            return;
         }
 
-        // calculate the purchased stock (amount and price)
-        double stockWorth = stockPrice * stockAmount;
+        System.out.println("you've bought " + stockName + " for " + stockPrice + " usd?  qty: " + quantity + "... total rip off.");
 
         // balance left
-        double balanceLeft = startingBalance - stockWorth;
+        balance = balance - totalExpense;
 
-        if (stockWorth > startingBalance) {
-            System.out.println("error, stockWorth is bigger than startingBalance");
-            // some form of future catch
-        }
+        System.out.println("after this purchase, your balance is : " + balance + " usd. Please come again.");
+    }
 
-        if ( balanceLeft < 0) {
-            System.out.println("your balance is below 0, you're such a lousy gambler.");
-        } else {
-            System.out.println("after this purchase, your balance is : " + balanceLeft + " usd. Please come again.");
-        }
-
-
+    private Scanner scanInput(String question) {
+        System.out.println(question);
+        return Scanner(System.in);
     }
 
 
@@ -80,44 +106,44 @@ public class Main {
 
      */
 
-    private void balance() {     // balance -- starting balance
-
-        System.out.println("what's your USD balance ?");
-        Scanner keyboard = new Scanner(System.in);
-        double startingBalance = keyboard.nextDouble();
-        System.out.println("your balance is : " + startingBalance + ". Have fun gambling :)");
-    }
-
-    private void addStock() {    // addStock -- add a stock
-
-        System.out.println("would you like to buy a stock ? ");
-        Scanner keyboard = new Scanner(System.in);
-        String stockName = keyboard.nextLine();
-        System.out.println("you've bought " + stockName + " stock. Enjoy seeing it go to 0.");
-    }
-
-    private void stockPrice() {    // addStock -- add a stock
-
-        System.out.println("how much is one share worth these days ? ");
-        Scanner keyboard = new Scanner(System.in);
-        double stockPrice = keyboard.nextDouble();
-        System.out.println("you've bought the stock for " + stockPrice + " usd.");
-    }
-
-    private void stockAmount() {    // addStock -- add a stock
-
-        System.out.println("how many shares did you bought ? ");
-        Scanner keyboard = new Scanner(System.in);
-        double stockAmount = keyboard.nextDouble();
-        System.out.println("you've bought " + stockAmount + " nr shares.");
-    }
-
-    private void balanceLeft() {
-        // starting balance minus each stock added.
-    }
-
-    private void stockWorth() {
-        // stockPrice * stockAmount
-    }
+//    private void balance() {     // balance -- starting balance
+//
+//        System.out.println("what's your USD balance ?");
+//        Scanner keyboard = new Scanner(System.in);
+//        double startingBalance = keyboard.nextDouble();
+//        System.out.println("your balance is : " + startingBalance + ". Have fun gambling :)");
+//    }
+//
+//    private void addStock() {    // addStock -- add a stock
+//
+//        System.out.println("would you like to buy a stock ? ");
+//        Scanner keyboard = new Scanner(System.in);
+//        String stockName = keyboard.nextLine();
+//        System.out.println("you've bought " + stockName + " stock. Enjoy seeing it go to 0.");
+//    }
+//
+//    private void stockPrice() {    // addStock -- add a stock
+//
+//        System.out.println("how much is one share worth these days ? ");
+//        Scanner keyboard = new Scanner(System.in);
+//        double stockPrice = keyboard.nextDouble();
+//        System.out.println("you've bought the stock for " + stockPrice + " usd.");
+//    }
+//
+//    private void stockAmount() {    // addStock -- add a stock
+//
+//        System.out.println("how many shares did you bought ? ");
+//        Scanner keyboard = new Scanner(System.in);
+//        double stockAmount = keyboard.nextDouble();
+//        System.out.println("you've bought " + stockAmount + " nr shares.");
+//    }
+//
+//    private void balanceLeft() {
+//        // starting balance minus each stock added.
+//    }
+//
+//    private void stockWorth() {
+//        // stockPrice * stockAmount
+//    }
 
 }
