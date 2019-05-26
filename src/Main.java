@@ -1,69 +1,115 @@
 import java.util.Scanner;
 
 public class Main {
+    static Scanner userInput = new Scanner(System.in);
 
     public static void main(String[] args) {
 
-        // balance -- starting balance
-        System.out.println("what's your USD balance ?");
-        Scanner usdbalance = new Scanner(System.in);
-        double startingBalance = usdbalance.nextDouble();
 
-        if (startingBalance < 0) {
-            System.out.println("I though you might try this, stop wasting your time.");
-        } else {
-            System.out.println("your balance is : " + startingBalance + ". Have fun gambling :)");
+        // begin - balance
+        double balance;
+        System.out.println("enter your balance: ");
+        Scanner scannedBalance = new Scanner(System.in);
+
+        try {
+            balance = scannedBalance.nextDouble();
+        } catch (Exception e){
+            System.out.println("invalid input. please provide a valid input to continue.");
+            return;
+        } // end - balance
+
+
+        // begin - verify user has balance.
+        if ( !(balance > 0)) {
+            System.out.println("it seems you don't have enough funds. top up your balance to continue.");
+            return; // todo: add a loop, asking for funds
         }
 
-        // stock name
-        System.out.println("add a stock name");
-        Scanner stockname = new Scanner(System.in);
-        String stockName = stockname.nextLine();
-        System.out.println("you've bought " + stockName + " stock. Worst decision ever.");
-        // needs method: if name already exists, try again
-        // catch everything else other than String and try again
+
+        // begin - stock name
+        String stockName;
+        System.out.println("add a stock name: ");
+        Scanner scannedStockName = new Scanner(System.in);
+
+        try {
+            stockName = scannedStockName.nextLine();
+            System.out.println("you've bought " + stockName + " stock. ");
+
+        } catch (Exception e) {
+            System.out.println("invalid stock name, please enter a valid stock name.");
+            return;
+        } // end - stock name todo: doesn't catch anything ... needs a revisit.
 
 
-        // stock price
-        System.out.println("how much is one share worth these days ? ");
-        Scanner stockprice = new Scanner(System.in);
-        double stockPrice = stockprice.nextDouble();
 
-        if (stockPrice > startingBalance) {
-            System.out.println("insufficient balance, try something you CAN afford. ");
-        } else {
-            System.out.println("you've bought " + stockName + " for " + stockPrice + " usd? wow... total rip off.");
+        // begin - stock price
+        double stockPrice;
+        System.out.println("how much does one " + stockName + " stock cost ? ");
+
+        try {
+            Scanner scannedStockPrice = new Scanner(System.in);
+            stockPrice = scannedStockPrice.nextDouble();
+        } catch (Exception e) {
+            System.out.println("invalid input. add a real price (try some numbers).");
+            return;
         }
-        //
 
-        // stock amount
+
+        if (stockPrice == 0) {
+            System.out.println(stockName + " can't be 0. add a valid price.");
+            return;
+        }
+
+        if (!(stockPrice > 0.00000001)) {
+            System.out.println("invalid input. add a valid price for " + stockName + ".");
+            return;
+        }
+
+        if (stockPrice > balance) {
+            System.out.println(stockName + "'s price exceeds your balance. add more funds to buy it.");
+            return;
+        } // todo: add a loop, asking to try again (try again or cancel).
+        // end - stock price
+
+
+
+        // begin - stock amount
+        double quantity;
         System.out.println("how many shares did you bought ? ");
-        Scanner stockamount = new Scanner(System.in);
-        double stockAmount = stockamount.nextDouble();
+        Scanner scannedQuantity = new Scanner(System.in);
 
-        if ((stockAmount * stockPrice) > startingBalance) {
+        try {
+            quantity = scannedQuantity.nextDouble();
+        } catch (Exception e) {
+            System.out.println("invalid input. add a valid input (try some numbers).");
+            return;
+        }
+
+        if (quantity == 0) {
+            System.out.println("invalid input. 0 shares can't be considered.");
+            return;
+        }
+
+        if (!(quantity > 0)) {
+            System.out.println("invalid input. add a positive value.");
+            return;
+        }
+
+        if ((quantity * stockPrice) > balance) {
             System.out.println("insufficient balance, buy less shares. ");
-        } else {
-            System.out.println("you've bought " + stockAmount + " " + stockName + " shares. You must hate money...");
+            return;
         }
 
         // calculate the purchased stock (amount and price)
-        double stockWorth = stockPrice * stockAmount;
+        double totalExpenses = stockPrice * quantity;
 
-        // balance left
-        double balanceLeft = startingBalance - stockWorth;
-
-        if (stockWorth > startingBalance) {
+        if (totalExpenses > balance) {
             System.out.println("error, stockWorth is bigger than startingBalance");
-            // some form of future catch
         }
 
-        if ( balanceLeft < 0) {
-            System.out.println("your balance is below 0, you're such a lousy gambler.");
-        } else {
-            System.out.println("after this purchase, your balance is : " + balanceLeft + " usd. Please come again.");
-        }
-
+        balance-=totalExpenses;
+            System.out.println("congratulations. you bough " + quantity + " " + stockName + "shares " + " and" +
+                    " it cost you " + totalExpenses + " usd. " + "your balance left is " + balance + " usd. the end.");
 
     }
 
