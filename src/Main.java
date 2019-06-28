@@ -1,9 +1,44 @@
+import java.sql.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
+
+        // conn - connection object used to provide access to database
+        Connection conn = null;
+
+        try {
+
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/video1","zamboni", "bobpasword01");
+
+            Statement sqlState = conn.createStatement();
+
+            String selectStuff = "Select first_name from students";
+
+            ResultSet rows = sqlState.executeQuery(selectStuff);
+
+            while(rows.next()) {
+                System.out.println(rows.getString("first_name"));
+            }
+
+        }
+
+        catch(SQLException ex) {
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("VendorError: " + ex.getErrorCode());
+            System.out.println("haide bossss");
+        }
+
+        catch(ClassNotFoundException e) {
+            System.out.println("class not found exception, add jdbc driver to classpath.");
+            e.printStackTrace();
+
+        }
 
 
         // begin - balance
@@ -25,7 +60,7 @@ public class Main {
                 System.out.println("negative balance. try again. ");
             }
         }
-                System.out.println("your balance is: " + balance);
+        System.out.println("your balance is: " + balance);
 
 
 
@@ -88,9 +123,10 @@ public class Main {
                 continue;
             }
             balance-=totalExpenses;
-            System.out.println("congratulations. you bough " + quantity + " " + stockName + "shares " + " and" +
+            System.out.println("congratulations. you bough " + quantity + " " + stockName + " shares " + " and" +
                     " it cost you " + totalExpenses + " usd. " + "your balance left is " + balance + " usd. the end.");
             break;
         } // end stock amount (quantity)
-   } // end main
+
+    } // end main
 }
