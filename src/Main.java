@@ -9,7 +9,7 @@ public class Main {
 
         // SQL connection
         SQLConnection connection = new SQLConnection();
-        connection.startconnection();
+        connection.startConnection();
 
 
         // begin - balance
