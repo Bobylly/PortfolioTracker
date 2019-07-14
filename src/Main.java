@@ -1,16 +1,19 @@
+import Storage.MySql;
+
+import java.sql.Connection;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
 
 
-
     public static void main(String[] args) {
 
-        // SQL connection
-        SQLConnection connection = new SQLConnection();
-        connection.startConnection();
+        MySql mysql = new MySql("jdbc:mysql://localhost/portfolio", "zamboni", "bobpasword01");
+        Connection connection = mysql.getConnection();
 
+        Users user = new Users(connection);
+        user.create("raducu", "mancaciosu", 1000, "TSLA");
 
         // begin - balance
         double balance = 0;
@@ -32,8 +35,6 @@ public class Main {
             }
         }
         System.out.println("your balance is: " + balance);
-
-
 
         // begin - stock name
         String stockName;
@@ -87,13 +88,12 @@ public class Main {
                 System.out.println("invalid input. add a positive quantity. try again.");
                 continue;
             }
-
             double totalExpenses = stockPrice * quantity;
             if (totalExpenses > balance) {
                 System.out.println("quantity can't exceed balance");
                 continue;
             }
-            balance-=totalExpenses;
+            balance -= totalExpenses;
             System.out.println("congratulations. you bough " + quantity + " " + stockName + " shares " + " and" +
                     " it cost you " + totalExpenses + " usd. " + "your balance left is " + balance + " usd. the end.");
             break;
