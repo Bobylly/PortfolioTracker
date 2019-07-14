@@ -3,3 +3,4 @@
 # ignores .idea/ folder
 .idea/
 #ignores out/ folder
+out/
