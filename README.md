@@ -2,7 +2,7 @@
 
   ## what it should look like
   
-    -   Keep live track of stocks/cryptocurrencies portfolio
+    -   Keep live track of stocks portfolio
     -   Plot excel-like statistics
     -   Plot visual graphs
     -   Edit portfolio in real time, google spreadsheets style
@@ -30,20 +30,18 @@
        - quantity
        - $ purchase price
        - $ sell price
-       - ROE
-       - current-btc-price
-        
+       - ROE        
         
         ----- to be continued, added more later -----
         
-   2.   create methods representing excel functions ($ sum, btc sum, average entry price, conditions, etc)
+   2.   create excel functions ($ sum, average entry price, conditions, etc)
        - if same stock_name found, alert user to add a different stock.
    
    
    
    # future releases ideas
    
-    - asign db entries as objects, look into hibernate or other alternatives
+    - asign db entries as objects, look into hibernate, jpa or other alternatives
     - research graphs, what libraries to use, what's easier to understand and easy to deploy
     - add users/login
    
